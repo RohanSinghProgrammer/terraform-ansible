@@ -1,0 +1,5 @@
+keys
+*.tfstate
+*.tfplan
+*.tfstate.backup
+*.terraform*
