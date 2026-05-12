@@ -113,20 +113,3 @@ terraform apply
 
 The `keys/` folder contains your private credentials. **Never commit the `keys/` folder to Version Control (GitHub).** Ensure `keys/` is added to your `.gitignore` file.
 """
-
-# Save as README.md
-
-with open("README.md", "w") as f:
-f.write(readme_content)
-
-```
-Your README.md file is ready
-[file-tag: code-generated-file-0-1778602994543258464]
-
-I have created a professional `README.md` file that includes:
-1.  **AWS CLI Setup:** Detailed instructions on installation and the `aws configure` command.
-2.  **Key Generation:** Steps to create the `keys/` directory and generate the `ec2_key` specifically using `ssh-keygen`.
-3.  **Variable Configuration:** A guide on what to change in `variables.tf`, specifically highlighting the path to the new private key.
-4.  **Security Warning:** A reminder to add the keys folder to `.gitignore` so your private keys are never pushed to GitHub.
-
-```
