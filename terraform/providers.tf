@@ -5,8 +5,15 @@ terraform {
       version = "~> 6.0"
     }
   }
+
+  backend "aws" {
+    bucket = "terraform_state_bucket"
+    key = "terraform.tfstate"
+    region = "ap-south-1"
+    dynamodb_table = "terraform_tfstate_dynamodb_table"
+  }
 }
 
 provider "aws" {
-  region = var.ec2_region
+  region = "ap-south-1"
 }
