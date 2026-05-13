@@ -1,8 +1,3 @@
-resource "aws_key_pair" "ec2_key" {
-  key_name   = "ec2_key"
-  public_key = file(var.ec2_key)
-}
-
 resource "aws_default_vpc" "default_vpc" {
 }
 
@@ -59,11 +54,11 @@ resource "aws_ebs_volume" "ec2_storage" {
 }
 
 resource "aws_instance" "ec2_instance" {
-  ami             = var.ami_id
-  instance_type   = var.instance_type
-  key_name        = aws_key_pair.ec2_key.key_name
+  ami           = var.ami_id
+  instance_type = var.instance_type
+  key_name      = var.ec2_key_name
   security_groups = [aws_security_group.ec2_sg.name]
-  count           = var.instance_count
+  count         = var.instance_count
   tags = {
     Name = "${var.env}_ec2_instance-${count.index}"
     env = var.env
