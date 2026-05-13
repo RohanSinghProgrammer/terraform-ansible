@@ -7,12 +7,12 @@ resource "aws_default_vpc" "default_vpc" {
 }
 
 resource "aws_security_group" "ec2_sg" {
-  name        = "ec2_sg"
+  name        = "${var.env}_ec2_sg"
   description = "Allow TLS inbound traffic and all outbound traffic"
   vpc_id      = aws_default_vpc.default_vpc.id
 
   tags = {
-    Name = "ec2_sg"
+    Name = "${var.env}_ec2_sg"
   }
 }
 
@@ -51,20 +51,22 @@ resource "aws_ebs_volume" "ec2_storage" {
   size              = var.ebs_size
   type              = var.ebs_type
   count             = var.instance_count
+  encrypted         = true
 
   tags = {
-    Name = "ec2_storage-${count.index}"
+    Name = "${var.env}_ec2_storage-${count.index}"
   }
 }
 
 resource "aws_instance" "ec2_instance" {
-  ami           = var.ami_id
-  instance_type = var.instance_type
-  key_name      = aws_key_pair.ec2_key.key_name
+  ami             = var.ami_id
+  instance_type   = var.instance_type
+  key_name        = aws_key_pair.ec2_key.key_name
   security_groups = [aws_security_group.ec2_sg.name]
-  count         = var.instance_count
+  count           = var.instance_count
   tags = {
-    Name = "ec2_instance-${count.index}"
+    Name = "${var.env}_ec2_instance-${count.index}"
+    env = var.env
   }
 }
 
