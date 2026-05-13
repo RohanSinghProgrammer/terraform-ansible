@@ -1,5 +1,5 @@
 module "dev_env" {
-  source = "./modules"
+  source = "./modules/"
   env = "dev"
   ec2_key = "keys/ec2_key.pub"
   ami_id = "ami-07a00cf47dbbc844c"
@@ -13,7 +13,7 @@ module "dev_env" {
 }
 
 module "staging_env" {
-  source = "./modules"
+  source = "./modules/"
   env = "staging"
   ec2_key = "keys/ec2_key.pub"
   ami_id = "ami-07a00cf47dbbc844c"
@@ -27,7 +27,7 @@ module "staging_env" {
 }
 
 module "prod_env" {
-  source = "./modules"
+  source = "./modules/"
   env = "prod"
   ec2_key = "keys/ec2_key.pub"
   ami_id = "ami-07a00cf47dbbc844c"
