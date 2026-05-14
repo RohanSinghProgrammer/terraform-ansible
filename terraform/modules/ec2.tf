@@ -54,14 +54,19 @@ resource "aws_ebs_volume" "ec2_storage" {
 }
 
 resource "aws_instance" "ec2_instance" {
-  ami           = var.ami_id
-  instance_type = var.instance_type
-  key_name      = var.ec2_key_name
+  ami             = var.ami_id
+  instance_type   = var.instance_type
+  key_name        = var.ec2_key_name
   security_groups = [aws_security_group.ec2_sg.name]
-  count         = var.instance_count
+  count           = var.instance_count
+  user_data       = <<-EOF
+                    #!/bin/bash
+                    apt update
+                    apt install -y python3
+                    EOF
   tags = {
     Name = "${var.env}_ec2_instance-${count.index}"
-    env = var.env
+    env  = var.env
   }
 }
 
