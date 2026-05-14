@@ -1,5 +1,5 @@
 output "ec2_public_ips" {
-  value       = [for ip in aws_instance.ec2_instance[*].public_ip : ip]
+  value       = aws_instance.ec2_instance[*].public_ip
   description = "Public IP Address of the EC2 Instance"
 }
 

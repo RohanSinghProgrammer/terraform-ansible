@@ -3,11 +3,6 @@ variable "env" {
   type        = string
 }
 
-variable "ec2_key" {
-  description = "EC2 Key File Path"
-  type        = string
-}
-
 variable "ami_id" {
   description = "AMI ID"
   type        = string
@@ -15,6 +10,11 @@ variable "ami_id" {
 
 variable "ec2_region" {
   description = "EC2 Region"
+  type        = string
+}
+
+variable "ec2_key_name" {
+  description = "EC2 Key Name"
   type        = string
 }
 

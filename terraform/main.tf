@@ -1,7 +1,12 @@
+resource "aws_key_pair" "shared_ec2_key" {
+  key_name   = "ec2_key"
+  public_key = file("keys/ec2_key.pub")
+}
+
 module "dev_env" {
   source = "./modules/"
   env = "dev"
-  ec2_key = "keys/ec2_key.pub"
+  ec2_key_name = aws_key_pair.shared_ec2_key.key_name
   ami_id = "ami-07a00cf47dbbc844c"
   ec2_region = "ap-south-1"
   instance_type = "t3.micro"
@@ -15,7 +20,7 @@ module "dev_env" {
 module "staging_env" {
   source = "./modules/"
   env = "staging"
-  ec2_key = "keys/ec2_key.pub"
+  ec2_key_name = aws_key_pair.shared_ec2_key.key_name
   ami_id = "ami-07a00cf47dbbc844c"
   ec2_region = "ap-south-1"
   instance_type = "t3.micro"
@@ -29,7 +34,7 @@ module "staging_env" {
 module "prod_env" {
   source = "./modules/"
   env = "prod"
-  ec2_key = "keys/ec2_key.pub"
+  ec2_key_name = aws_key_pair.shared_ec2_key.key_name
   ami_id = "ami-07a00cf47dbbc844c"
   ec2_region = "ap-south-1"
   instance_type = "t3.medium"
