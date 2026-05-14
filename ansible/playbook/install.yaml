@@ -1,0 +1,24 @@
+- name: Install Packages
+  hosts: servers
+  become: yes
+
+  vars:
+    packages_to_install:
+      - nginx
+      - wget
+      - zip
+      - unzip
+      - apache2
+
+  tasks:
+    - name: Install Packages
+      apt: 
+        name: "{{item}}"
+        state: present
+      loop: "{{packages_to_install}}"
+      when: ansible_facts["distribution"] == "Ubuntu"
+
+    - name: Show Installation Message
+      debug: 
+        msg: "Installion Done for {{item}}"
+      when: ansible_facts["distribution"] == "Ubuntu"
