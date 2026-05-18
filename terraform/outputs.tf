@@ -1,9 +1,23 @@
-output "ec2_public_ips" {
-  value       = [for ip in aws_instance.ec2_instance[*].public_ip : ip]
-  description = "Public IP Address of the EC2 Instance"
+output "dev_public_ips" {
+  value = module.dev_env.ec2_public_ips
 }
 
-output "ec2_ssh_connect" {
-  description = "Command to connect to EC2 using SSH"
-  value       = [for ip in aws_instance.ec2_instance[*].public_ip : "ssh -i ${var.ec2_private_key_path} ubuntu@${ip}"]
+output "staging_public_ips" {
+  value = module.staging_env.ec2_public_ips
+}
+
+output "prod_public_ips" {
+  value = module.prod_env.ec2_public_ips
+}
+
+output "dev_ssh_commands" {
+  value = module.dev_env.ec2_ssh_connect
+}
+
+output "staging_ssh_commands" {
+  value = module.staging_env.ec2_ssh_connect
+}
+
+output "prod_ssh_commands" {
+  value = module.prod_env.ec2_ssh_connect
 }

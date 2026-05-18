@@ -1,18 +1,13 @@
-resource "aws_key_pair" "ec2_key" {
-  key_name   = "ec2_key"
-  public_key = file(var.ec2_key)
-}
-
 resource "aws_default_vpc" "default_vpc" {
 }
 
 resource "aws_security_group" "ec2_sg" {
-  name        = "ec2_sg"
+  name        = "${var.env}_ec2_sg"
   description = "Allow TLS inbound traffic and all outbound traffic"
   vpc_id      = aws_default_vpc.default_vpc.id
 
   tags = {
-    Name = "ec2_sg"
+    Name = "${var.env}_ec2_sg"
   }
 }
 
@@ -46,33 +41,23 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
   ip_protocol       = "-1"
 }
 
-resource "aws_ebs_volume" "ec2_storage" {
-  availability_zone = var.ebs_az
-  size              = var.ebs_size
-  type              = var.ebs_type
-  count             = var.instance_count
-
-  tags = {
-    Name = "ec2_storage-${count.index}"
-  }
-}
-
 resource "aws_instance" "ec2_instance" {
-  ami           = var.ami_id
-  instance_type = var.instance_type
-  key_name      = aws_key_pair.ec2_key.key_name
+  ami             = var.ami_id
+  instance_type   = var.instance_type
+  key_name        = var.ec2_key_name
   security_groups = [aws_security_group.ec2_sg.name]
-  count         = var.instance_count
-  tags = {
-    Name = "ec2_instance-${count.index}"
-  }
-}
+  count           = var.instance_count
 
-resource "aws_volume_attachment" "ec2_storage_attachment" {
-  count       = var.instance_count
-  device_name = "/dev/sdh"
-  volume_id   = aws_ebs_volume.ec2_storage[count.index].id
-  instance_id = aws_instance.ec2_instance[count.index].id
+  root_block_device {
+    volume_size = var.ebs_size
+    volume_type = var.ebs_type
+    encrypted   = true
+  }
+
+  tags = {
+    Name = "${var.env}_ec2_instance-${count.index}"
+    env  = var.env
+  }
 }
 
 
