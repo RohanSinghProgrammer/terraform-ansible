@@ -13,7 +13,6 @@ module "dev_env" {
   instance_count = 1
   ebs_size = 16
   ebs_type = "gp3"
-  ebs_az = "ap-south-1a"
   ec2_private_key_path = "../keys/ec2_key"
 }
 
@@ -27,7 +26,6 @@ module "staging_env" {
   instance_count = 2
   ebs_size = 20
   ebs_type = "gp3"
-  ebs_az = "ap-south-1a"
   ec2_private_key_path = "../keys/ec2_key"
 }
 
@@ -41,6 +39,5 @@ module "prod_env" {
   instance_count = 2
   ebs_size = 24
   ebs_type = "gp3"
-  ebs_az = "ap-south-1a"
   ec2_private_key_path = "../keys/ec2_key"
 }
