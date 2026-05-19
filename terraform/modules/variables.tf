@@ -38,11 +38,6 @@ variable "ebs_type" {
   type        = string
 }
 
-variable "ebs_az" {
-  description = "AZ of the EBS Volume"
-  type        = string
-}
-
 variable "ec2_private_key_path" {
   description = "Private Key File Path"
   type        = string
