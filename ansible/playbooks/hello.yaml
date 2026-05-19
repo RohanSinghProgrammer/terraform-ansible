@@ -1,6 +1,6 @@
 - name: Hello Bro
   hosts: servers
-  become: yes
+  become: true
   vars:
     my_name: Bro
   tasks:

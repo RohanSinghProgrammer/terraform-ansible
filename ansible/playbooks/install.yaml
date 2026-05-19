@@ -1,6 +1,6 @@
 - name: Install Packages
   hosts: servers
-  become: yes
+  become: true
 
   vars:
     packages_to_install:
